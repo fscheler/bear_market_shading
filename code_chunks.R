@@ -67,13 +67,13 @@ add_bear_shade<-function(st_date,ed_date,shade_color="darkgray",threshold=0.1,mo
 
 #Example Output
 mb <- read_csv("https://cloud.amadeusquantamental.lu/owncloud/index.php/s/gka11HDskZE2rPA/download")
-cols <- c("Drawdowns (vs 252D High)" = "grey","% Members >200D High" = "#04103b")
+cols <- c("Drawdowns (vs 252D High)" = "grey","% Members >200D SMA" = "#04103b")
 
 ggplot(data=mb,aes(x=as.Date(date), y=PX_LAST/runmax(PX_LAST,252,align="right")))+
   add_bear_shade(as.Date(min(mb$date)),as.Date(Sys.Date()),threshold=0.07,mode="runmax",days=252)$rec_shade+
   #geom_line(size=1,aes(y=PX_LAST/cummax(PX_LAST),color="Drawdowns"))+
   geom_line(size=1,aes(y=PX_LAST/runmax(PX_LAST,252,align="right"),color="Drawdowns (vs 252D High)"))+
-  geom_line(size=1,aes(y=PCT_MEMB_ABOVE_MOV_AVG_200D/100,color="% Members >200D High"))+
+  geom_line(size=1,aes(y=PCT_MEMB_ABOVE_MOV_AVG_200D/100,color="% Members >200D SMA"))+
   scale_colour_manual(values = cols)+
   #size 22 for overleaf
   labs(color='')+
